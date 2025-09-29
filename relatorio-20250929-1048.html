@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Análise Corporal - Cliente</title>
+    <style>
+        @page { 
+            size: A4; 
+            margin: 12mm 8mm; 
+            @bottom-center {
+                content: "Página " counter(page) " - Cliente - 28/09/2025";
+                font-size: 8pt;
+                color: #666;
+            }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', 'Calibri', Arial, sans-serif; 
+            font-size: 11px; 
+            line-height: 1.4; 
+            color: #2c3e50; 
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        .report-container { 
+            max-width: 210mm; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12); 
+            border: 1px solid #dee2e6;
+        }
+        .header { 
+            background: linear-gradient(135deg, #0056b3 0%, #007bff 50%, #0066cc 100%);
+            color: white; 
+            padding: 18px 20px; 
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="1.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+        }
+        .header-content { position: relative; z-index: 2; }
+        .header h1 { 
+            font-size: 22px; 
+            font-weight: 700; 
+            margin-bottom: 4px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .header .subtitle { 
+            font-size: 13px; 
+            opacity: 0.9; 
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        .header .report-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            opacity: 0.8;
+        }
+        .content { padding: 20px; }
+        
+        /* RESULTADO PRINCIPAL */
+        .main-result { 
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%); 
+            border: 3px solid #28a745; 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            text-align: center; 
+            page-break-inside: avoid;
+            position: relative;
+        }
+        .main-result::before {
+            content: '📊';
+            font-size: 40px;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            opacity: 0.2;
+        }
+        .result-title { 
+            font-size: 32px; 
+            font-weight: 900; 
+            color: #155724; 
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .result-subtitle { 
+            font-size: 14px; 
+            color: #28a745; 
+            font-weight: 600; 
+            margin-bottom: 12px; 
+        }
+        .confidence-badge { 
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white; 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            font-weight: 700; 
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            font-size: 12px;
+        }
+        
+        /* SEÇÕES PRINCIPAIS */
+        .section { 
+            background: rgba(248, 249, 250, 0.8); 
+            border-radius: 8px; 
+            padding: 16px; 
+            margin: 15px 0; 
+            border-left: 4px solid #007bff; 
+            page-break-inside: avoid;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .section.validation { border-left-color: #17a2b8; }
+        .section.physical { border-left-color: #6f42c1; }
+        .section.technical { border-left-color: #fd7e14; }
+        .section.composition { border-left-color: #28a745; }
+        .section.recommendations { border-left-color: #ffc107; }
+        .section.disclaimer { border-left-color: #dc3545; }
+        
+        .section-header { 
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .section-icon { font-size: 18px; margin-right: 8px; }
+        .section-title { 
+            font-size: 15px; 
+            font-weight: 700; 
+            color: #1565c0; 
+            flex: 1;
+        }
+        .section-content {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #495057;
+        }
+        
+        /* FOTO E INFORMAÇÕES BÁSICAS */
+        .patient-info { 
+            display: flex; 
+            gap: 16px; 
+            align-items: flex-start; 
+            margin: 16px 0; 
+        }
+        .photo-section { 
+            flex: 0 0 160px; 
+            background: white; 
+            border: 2px solid #dee2e6; 
+            border-radius: 8px; 
+            padding: 8px; 
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .patient-photo { 
+            width: 100%; 
+            height: 200px; 
+            object-fit: cover; 
+            border-radius: 6px; 
+            border: 1px solid #e9ecef;
+        }
+        .photo-placeholder { 
+            width: 100%; 
+            height: 200px; 
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef); 
+            border-radius: 6px; 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            color: #6c757d; 
+            font-size: 10px;
+        }
+        .basic-info { 
+            flex: 1; 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 8px; 
+        }
+        .info-card { 
+            background: white; 
+            padding: 10px; 
+            border-radius: 6px; 
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .info-label { 
+            font-size: 9px; 
+            font-weight: 600; 
+            color: #6c757d; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .info-value { 
+            font-size: 12px; 
+            font-weight: 600; 
+            color: #495057; 
+        }
+        
+        /* VALIDAÇÃO TÉCNICA */
+        .validation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .validation-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        .validation-item h4 {
+            font-size: 11px;
+            font-weight: 700;
+            color: #17a2b8;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .validation-item ul {
+            list-style: none;
+            padding: 0;
+        }
+        .validation-item li {
+            font-size: 10px;
+            line-height: 1.4;
+            margin: 4px 0;
+            padding-left: 12px;
+            position: relative;
+        }
+        .validation-item li::before {
+            content: '✓';
+            color: #28a745;
+            font-weight: 700;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* OBSERVAÇÕES FÍSICAS */
+        .physical-obs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .obs-item {
+            background: rgba(111, 66, 193, 0.1);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #6f42c1;
+        }
+        .obs-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #6f42c1;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .obs-value {
+            font-size: 10px;
+            color: #495057;
+            line-height: 1.3;
+        }
+        
+        /* COMPOSIÇÃO CORPORAL */
+        .composition-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 12px; 
+            margin: 12px 0; 
+        }
+        .comp-item { 
+            background: white; 
+            padding: 12px; 
+            border-radius: 8px; 
+            text-align: center; 
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .comp-value { 
+            font-size: 18px; 
+            font-weight: 800; 
+            color: #28a745; 
+            margin-bottom: 4px; 
+        }
+        .comp-label { 
+            font-size: 10px; 
+            color: #6c757d; 
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        .comp-percent { 
+            font-size: 9px; 
+            color: #495057; 
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+        
+        /* LISTAS TÉCNICAS */
+        .tech-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .tech-list li {
+            background: rgba(0, 123, 255, 0.05);
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid #007bff;
+            font-size: 10px;
+            line-height: 1.4;
+            position: relative;
+            padding-left: 24px;
+        }
+        .tech-list li::before {
+            content: '▶';
+            color: #007bff;
+            font-weight: 700;
+            position: absolute;
+            left: 8px;
+            top: 10px;
+        }
+        
+        /* DISCLAIMER */
+        .disclaimer { 
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); 
+            border: 2px solid #ffc107; 
+            border-radius: 8px; 
+            padding: 16px; 
+            margin: 20px 0; 
+            text-align: center; 
+            page-break-inside: avoid;
+            position: relative;
+        }
+        .disclaimer::before {
+            content: '⚠️';
+            font-size: 24px;
+            position: absolute;
+            top: 8px;
+            left: 12px;
+        }
+        .disclaimer-title { 
+            font-size: 13px; 
+            font-weight: 700; 
+            color: #856404; 
+            margin-bottom: 8px; 
+            margin-left: 30px;
+        }
+        .disclaimer-text { 
+            font-size: 10px; 
+            color: #856404; 
+            line-height: 1.4;
+            margin-left: 30px;
+        }
+        
+        /* FOOTER */
+        .footer { 
+            background: linear-gradient(135deg, #343a40 0%, #495057 100%); 
+            color: white; 
+            text-align: center; 
+            padding: 14px; 
+            font-size: 9px; 
+        }
+        
+        /* RESPONSIVE */
+        @media print {
+            body { background: white; font-size: 10px; }
+            .report-container { box-shadow: none; border: none; }
+            .section { box-shadow: none; }
+        }
+        @media (max-width: 210mm) {
+            .patient-info { flex-direction: column; }
+            .basic-info { grid-template-columns: 1fr; }
+            .validation-grid { grid-template-columns: 1fr; }
+            .composition-grid { grid-template-columns: repeat(2, 1fr); }
+            .physical-obs-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <div class="header">
+            <div class="header-content">
+                <h1>📋 Relatório de Análise Corporal Antropométrica</h1>
+                <p class="subtitle">Avaliação Visual Computacional para Fins Educativos</p>
+                <div class="report-meta">
+                    <span>Cliente: Cliente</span>
+                    <span>Data: 28/09/2025 às 17:38:09</span>
+                    <span>Confiança Técnica: 85%</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <!-- RESULTADO PRINCIPAL -->
+            <div class="main-result">
+                <div class="result-title">15-19%</div>
+                <div class="result-subtitle">
+                    Estimativa de Percentual de Gordura Corporal<br>
+                    <strong>Margem de Erro:</strong> +/- 3%
+                </div>
+                <div class="confidence-badge">
+                    Nível de Confiança Técnica: 85%
+                </div>
+            </div>
+
+            <!-- INFORMAÇÕES BÁSICAS E FOTO -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">👤</span>
+                    <h2 class="section-title">Dados do Participante e Registro Visual</h2>
+                </div>
+                <div class="patient-info">
+                    <div class="photo-section">
+                        
+                        <div class="photo-placeholder">
+                            <span style="font-size: 24px; margin-bottom: 8px;">📷</span>
+                            <span>Sem registro visual</span>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="basic-info">
+                        <div class="info-card">
+                            <div class="info-label">Nome do Participante</div>
+                            <div class="info-value">Cliente</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Data da Análise</div>
+                            <div class="info-value">28/09/2025</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Peso Corporal</div>
+                            <div class="info-value">0 kg</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Gênero Identificado</div>
+                            <div class="info-value">Masculino</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Horário da Análise</div>
+                            <div class="info-value">17:38:09</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Método Utilizado</div>
+                            <div class="info-value">Análise Visual IA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- VALIDAÇÃO TÉCNICA -->
+            <div class="section validation">
+                <div class="section-header">
+                    <span class="section-icon">✅</span>
+                    <h2 class="section-title">Validação Técnica da Imagem</h2>
+                </div>
+                <div class="section-content">
+                    <p><strong>Status:</strong> Imagem aprovada para análise antropométrica</p>
+                    <div class="validation-grid">
+                        
+                        <div class="validation-item">
+                            <h4>🔍 Qualidade Técnica</h4>
+                            <ul>
+                                <li>Imagem nítida, sem blur excessivo</li><li>Iluminação predominantemente uniforme, com leve sombra na parte inferior do corpo, mas não comprometendo a análise</li><li>Contraste adequado para definição clara dos contornos corporais</li>
+                            </ul>
+                        </div>
+                        
+                        
+                        
+                        <div class="validation-item">
+                            <h4>🧍 Posicionamento Corporal</h4>
+                            <ul>
+                                <li>Posição frontal completa</li><li>Corpo ereto, braços relaxados ao lado do corpo</li><li>Pés afastados na largura dos ombros (segmento inferior capturado parcialmente, mas posição aparente correta)</li><li>Cabeça ereta, olhar ligeiramente para cima (não frontal estrito, porém suficiente)</li>
+                            </ul>
+                        </div>
+                        
+                        
+                        
+                        <div class="validation-item">
+                            <h4>📐 Enquadramento</h4>
+                            <ul>
+                                <li>Corpo visível da cabeça até a região superior das coxas, enquadramento parcial dos pés (cerca de 80% do corpo visível)</li><li>Fundo neutro e uniforme, ambiente interno com paredes claras e móveis discretos</li><li>Roupas adequadas que permitem visualização do contorno corporal (bermuda curta e o torso sem camisa)</li><li>Distância apropriada para análise</li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+
+            
+
+            
+
+            
+            <!-- ANÁLISE TÉCNICA DETALHADA -->
+            <div class="section technical">
+                <div class="section-header">
+                    <span class="section-icon">🧠</span>
+                    <h2 class="section-title">Raciocínio Técnico da Análise</h2>
+                </div>
+                <div class="section-content">
+                    <p><strong>Metodologia aplicada:</strong></p>
+                    <p style="margin: 10px 0; padding: 12px; background: rgba(253, 126, 20, 0.1); border-radius: 6px; border-left: 3px solid #fd7e14; font-size: 10px; line-height: 1.4;">
+                        Imagem apresenta boa resolução e posicionamento que permite visualização clara da distribuição de massa muscular e adiposidade central. A adiposidade está localizada principalmente no abdômen inferior e flancos, com moderada definição muscular nos braços. O posicionamento frontal permite análise direta dos marcos ósseos e musculares.
+                    </p>
+                    
+                    
+                    <p><strong>Observações Técnicas Específicas:</strong></p>
+                    <ul class="tech-list">
+                        <li>Clavículas visíveis sem definição óssea pronunciada</li><li>Acúmulo moderado de tecido adiposo na região abdominal inferior</li><li>Definição muscular discreta nos membros superiores</li><li>Limitação na avaliação de regiões inferiores completas e dorsal</li>
+                    </ul>
+                    
+                    
+                    
+                    <p><strong>Análise Segmentar:</strong></p>
+                    <ul class="tech-list">
+                        <li>Região abdominal: Moderada adiposidade subcutânea, ausência de definição muscular clara, ligeira presença de tecido adiposo acumulado na região inferior do abdômen</li><li>Membros superiores: Vascularização superficial ausente, definição muscular discreta em deltoides e tríceps, massa muscular aparenta moderada</li><li>Região dorsal: Não visível nesta imagem para avaliação</li><li>Membros inferiores: Parte superior das coxas visível, adiposidade moderada</li>
+                    </ul>
+                    
+                    
+                    
+                    <p><strong>Marcos Anatômicos Identificados:</strong></p>
+                    <ul class="tech-list">
+                        <li>Clavículas visíveis, porém sem definição óssea acentuada</li><li>Contornos musculares abdominais poco evidentes</li><li>Ausência de vascularização superficial notável</li><li>Distribuição do tecido adiposo presente principalmente na região abdominal inferior e flancos</li>
+                    </ul>
+                    
+                    
+                    <div style="margin-top: 12px; padding: 10px; background: rgba(0, 123, 255, 0.1); border-radius: 6px; border-left: 3px solid #007bff; font-size: 10px;">
+                        <strong>Nível de Confiança:</strong> 85% - Imagem com boa qualidade e posicionamento, permitindo análise consistente.
+                    </div>
+                </div>
+            </div>
+            
+
+            
+            <!-- RECOMENDAÇÕES EDUCATIVAS -->
+            <div class="section recommendations">
+                <div class="section-header">
+                    <span class="section-icon">🧭</span>
+                    <h2 class="section-title">Orientações e Recomendações Educativas</h2>
+                </div>
+                <div class="section-content">
+                    <p><strong>Sugestões para acompanhamento e desenvolvimento:</strong></p>
+                    <ul class="tech-list">
+                        <li>Para avaliação precisa e acompanhamento personalizado, consulte profissional de saúde especializado em avaliação antropométrica</li><li>Considerar testes complementares como bioimpedância ou DEXA para dados quantitativos</li><li>Manter rotina equilibrada de alimentação e exercícios físicos focados em redução de percentual de gordura e aumento da massa muscular</li><li>Avaliar orientação de nutricionista e educador físico para ajustes específicos</li>
+                    </ul>
+                </div>
+            </div>
+            
+
+            
+            <!-- CONSIDERAÇÕES TÉCNICAS -->
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">💡</span>
+                    <h2 class="section-title">Considerações Técnicas e Limitações</h2>
+                </div>
+                <div class="section-content">
+                    <p><strong>Aspectos técnicos relevantes para interpretação dos resultados:</strong></p>
+                    <ul class="tech-list">
+                        <li>Estimativa baseada em padrões visuais correlacionados a dados antropométricos reconhecidos</li><li>Variabilidades individuais e fatores como hidratação e postura podem afetar precisão</li><li>Imagem limitada parcialmente no enquadramento inferior, sem prejuízo relevante à análise principal</li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            <!-- DISCLAIMER OBRIGATÓRIO -->
+            <div class="disclaimer">
+                <div class="disclaimer-title">Protocolo de Segurança e Responsabilidade</div>
+                <div class="disclaimer-text">
+                    Esta análise é apenas referencial e não deve ser usada para decisões clínicas. Para orientações personalizadas, consulte um profissional de saúde.
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <strong>Sistema de Análise Antropométrica Computacional</strong> | 
+            Versão Profissional 3.4 | 
+            Relatório gerado em 28/09/2025 às 17:38:09 | 
+            Participante: Cliente | 
+            Confiança Técnica: 85% | 
+            Método: Análise Visual Assistida por IA
+        </div>
+    </div>
+</body>
+</html>
