@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Análise Corporal - Guilherme</title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            padding: 20px; 
+            line-height: 1.6;
+        }
+        .report-container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); 
+        }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            text-align: center; 
+            padding: 40px 20px; 
+        }
+        .header h1 { 
+            font-size: 32px; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+        }
+        .subtitle { 
+            font-size: 14px; 
+            opacity: 0.9; 
+            font-weight: 300; 
+        }
+        .meta { 
+            display: flex; 
+            justify-content: center; 
+            gap: 40px; 
+            margin-top: 25px; 
+            flex-wrap: wrap;
+        }
+        .meta-item { 
+            text-align: center; 
+        }
+        .meta-label { 
+            font-size: 11px; 
+            opacity: 0.8; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-bottom: 5px; 
+        }
+        .meta-value { 
+            font-size: 22px; 
+            font-weight: 700; 
+        }
+        .content { 
+            padding: 40px 30px; 
+        }
+        .section { 
+            margin-bottom: 35px; 
+            background: #f8f9fa; 
+            border-radius: 12px; 
+            padding: 25px; 
+        }
+        .section-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            margin-bottom: 20px; 
+        }
+        .section-icon { 
+            font-size: 28px; 
+        }
+        .section-title { 
+            font-size: 20px; 
+            font-weight: 700; 
+            color: #2c3e50; 
+        }
+        .highlight-box { 
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); 
+            border-left: 5px solid #667eea; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 20px 0; 
+        }
+        .highlight-title { 
+            font-size: 14px; 
+            font-weight: 700; 
+            color: #667eea; 
+            margin-bottom: 10px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        .highlight-value { 
+            font-size: 26px; 
+            font-weight: 900; 
+            color: #2c3e50; 
+        }
+        .composition-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            gap: 20px; 
+            margin: 25px 0; 
+        }
+        .comp-item { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            text-align: center; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            transition: transform 0.3s ease;
+        }
+        .comp-item:hover {
+            transform: translateY(-5px);
+        }
+        .comp-value { 
+            font-size: 24px; 
+            font-weight: 900; 
+            color: #667eea; 
+            margin-bottom: 6px; 
+        }
+        .comp-label { 
+            font-size: 11px; 
+            color: #6c757d; 
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .tech-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .tech-list li {
+            background: white;
+            margin: 10px 0;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 32px;
+        }
+        .tech-list li::before {
+            content: '●';
+            color: #667eea;
+            font-weight: 700;
+            position: absolute;
+            left: 14px;
+            top: 14px;
+        }
+        .disclaimer { 
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); 
+            border: 3px solid #ffc107; 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin: 24px 0; 
+            text-align: center; 
+        }
+        .disclaimer-title { 
+            font-size: 15px; 
+            font-weight: 700; 
+            color: #856404; 
+            margin-bottom: 10px; 
+        }
+        .disclaimer-text { 
+            font-size: 13px; 
+            color: #856404; 
+            line-height: 1.6;
+        }
+        .footer { 
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); 
+            color: white; 
+            text-align: center; 
+            padding: 20px; 
+            font-size: 12px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <div class="header">
+            <h1>📋 Relatório de Análise Corporal</h1>
+            <p class="subtitle">Avaliação Visual Computacional Avançada</p>
+            <div class="meta">
+                <div class="meta-item">
+                    <div class="meta-label">Cliente</div>
+                    <div class="meta-value">Guilherme</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Peso</div>
+                    <div class="meta-value">114.5kg</div>
+                </div>
+                
+                <div class="meta-item">
+                    <div class="meta-label">Gênero</div>
+                    <div class="meta-value">Masculino</div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            
+            <div class="highlight-box">
+                <div class="highlight-title">📊 Estimativa de Gordura Corporal</div>
+                <div class="highlight-value">20-24% +/- 24%</div>
+            </div>
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">💪</span>
+                    <h2 class="section-title">Composição Corporal Calculada</h2>
+                </div>
+                <div class="composition-grid">
+                    
+                    <div class="comp-item">
+                        <div class="comp-label">Massa Magra</div>
+                        <div class="comp-value">86.9kg</div>
+                    </div>
+                    
+                    
+                    <div class="comp-item">
+                        <div class="comp-label">Massa Gorda</div>
+                        <div class="comp-value">25.3kg</div>
+                    </div>
+                    
+                    
+                    <div class="comp-item">
+                        <div class="comp-label">Massa Óssea</div>
+                        <div class="comp-value">5.2kg</div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🔍</span>
+                    <h2 class="section-title">Observações Físicas Detalhadas</h2>
+                </div>
+                <ul class="tech-list">
+                    <li>(DETALHADAS):</li><li>Vestuário: Short cinza com estampa branca de linhas que simulam folhas; cordão branco na cintura aparente, sem camisa, permitindo boa visualização do torso.</li><li>Acessórios: Relógio preto digital no pulso esquerdo; pulseira colorida (predominância azul e branco) no pulso direito; anel discreto na mão esquerda.</li><li>Ambiente: Ambiente interno com parede clara, quadro decorativo com imagens de leões na parede ao fundo, sofá bege claro parcialmente visível, porta de madeira ao lado esquerdo.</li><li>Postura: Corpo em posição frontal com leve inclinação para trás, braços relaxados ao lado do corpo, cabeça levantada olhando para frente/para cima.</li><li>Iluminação: Natural e artificial combinadas; iluminação suave com luz proveniente do teto, sem sombras projetadas sobre o corpo, iluminação uniforme e adequada para análise.</li><li>Outros detalhes únicos: Presença de tatuagens no braço direito, destacando desenhos e textos; textura da pele visível; ausência de outras pessoas na imagem.</li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🧠</span>
+                    <h2 class="section-title">Raciocínio Técnico</h2>
+                </div>
+                <p style="font-size: 14px; line-height: 1.8; color: #495057;">(resumo):
+Imagem frontal, corpo centrado, com marcas anatômicas moderadamente definidas no torso e membros superiores. Há boa visualização dos contornos musculares do peitoral, braços e abdômen, embora com leve acúmulo de tecido adiposo subcutâneo na região abdominal inferior e flancos. Distribuição de tecido adiposo compatível com faixa intermediária de percentual de gordura. Iluminação adequada e alta qualidade da imagem permitem análise confiável com confiança técnica média-alta.</p>
+            </div>
+            
+            
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🧭</span>
+                    <h2 class="section-title">Sugestões Educativas</h2>
+                </div>
+                <ul class="tech-list">
+                    <li>se monitoramento contínuo da composição corporal com acompanhamento profissional para metas personalizadas.</li><li>Avaliação com nutricionista/especialista em educação física para ajuste dietético e plano de treinamento personalizado.</li><li>Importância da manutenção de dieta equilibrada e exercício regular para controle da gordura corporal e fortalecimento muscular.</li><li>Considerar variações individuais na distribuição de tecido adiposo e fator genético.</li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">💡</span>
+                    <h2 class="section-title">Considerações Técnicas</h2>
+                </div>
+                <ul class="tech-list">
+                    <li>Estimativa baseada em análises visuais correlacionadas a padrões antropométricos validados.</li><li>Margem de erro natural devido à metodologia simplificada e condições da imagem.</li><li>Influência da hidratação e postura deve ser considerada em avaliações subsequentes.</li><li>Leve discrepância nos cálculos residuais destacada, comum em modelos simplificados.</li>
+                </ul>
+            </div>
+            
+            
+            <div class="disclaimer">
+                <div class="disclaimer-title">⚠️ Protocolo de Segurança</div>
+                <div class="disclaimer-text">
+                    🛡️ Esta análise é apenas referencial e não deve ser usada para decisões clínicas. Para orientações personalizadas, consulte um profissional de saúde.
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <strong>Sistema de Análise Corporal V5.0</strong><br>
+            8 de outubro de 2025 às 10:48 (Horário de Brasília) • Guilherme
+        </div>
+    </div>
+</body>
+</html>
