@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Análise Corporal - Selma Amparo Ortolá Simó </title>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            padding: 20px; 
+            line-height: 1.6;
+        }
+        .report-container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 20px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3); 
+        }
+        .header { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            color: white; 
+            text-align: center; 
+            padding: 40px 20px; 
+        }
+        .header h1 { 
+            font-size: 32px; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+        }
+        .subtitle { 
+            font-size: 14px; 
+            opacity: 0.9; 
+            font-weight: 300; 
+        }
+        .meta { 
+            display: flex; 
+            justify-content: center; 
+            gap: 40px; 
+            margin-top: 25px; 
+            flex-wrap: wrap;
+        }
+        .meta-item { 
+            text-align: center; 
+        }
+        .meta-label { 
+            font-size: 11px; 
+            opacity: 0.8; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            margin-bottom: 5px; 
+        }
+        .meta-value { 
+            font-size: 22px; 
+            font-weight: 700; 
+        }
+        .content { 
+            padding: 40px 30px; 
+        }
+        .section { 
+            margin-bottom: 35px; 
+            background: #f8f9fa; 
+            border-radius: 12px; 
+            padding: 25px; 
+        }
+        .section-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            margin-bottom: 20px; 
+        }
+        .section-icon { 
+            font-size: 28px; 
+        }
+        .section-title { 
+            font-size: 20px; 
+            font-weight: 700; 
+            color: #2c3e50; 
+        }
+        .highlight-box { 
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); 
+            border-left: 5px solid #667eea; 
+            padding: 20px; 
+            border-radius: 8px; 
+            margin: 20px 0; 
+        }
+        .highlight-title { 
+            font-size: 14px; 
+            font-weight: 700; 
+            color: #667eea; 
+            margin-bottom: 10px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        .highlight-value { 
+            font-size: 26px; 
+            font-weight: 900; 
+            color: #2c3e50; 
+        }
+        .composition-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            gap: 20px; 
+            margin: 25px 0; 
+        }
+        .comp-item { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            text-align: center; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            transition: transform 0.3s ease;
+        }
+        .comp-item:hover {
+            transform: translateY(-5px);
+        }
+        .comp-value { 
+            font-size: 24px; 
+            font-weight: 900; 
+            color: #667eea; 
+            margin-bottom: 6px; 
+        }
+        .comp-label { 
+            font-size: 11px; 
+            color: #6c757d; 
+            font-weight: 600;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+        .tech-list {
+            list-style: none;
+            padding: 0;
+            margin: 12px 0;
+        }
+        .tech-list li {
+            background: white;
+            margin: 10px 0;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 32px;
+        }
+        .tech-list li::before {
+            content: '●';
+            color: #667eea;
+            font-weight: 700;
+            position: absolute;
+            left: 14px;
+            top: 14px;
+        }
+        .disclaimer { 
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); 
+            border: 3px solid #ffc107; 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin: 24px 0; 
+            text-align: center; 
+        }
+        .disclaimer-title { 
+            font-size: 15px; 
+            font-weight: 700; 
+            color: #856404; 
+            margin-bottom: 10px; 
+        }
+        .disclaimer-text { 
+            font-size: 13px; 
+            color: #856404; 
+            line-height: 1.6;
+        }
+        .footer { 
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); 
+            color: white; 
+            text-align: center; 
+            padding: 20px; 
+            font-size: 12px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <div class="header">
+            <h1>📋 Relatório de Análise Corporal</h1>
+            <p class="subtitle">Avaliação Visual Computacional Avançada</p>
+            <div class="meta">
+                <div class="meta-item">
+                    <div class="meta-label">Cliente</div>
+                    <div class="meta-value">Selma Amparo Ortolá Simó </div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Peso</div>
+                    <div class="meta-value">82kg</div>
+                </div>
+                
+                <div class="meta-item">
+                    <div class="meta-label">Gênero</div>
+                    <div class="meta-value">Feminino</div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="content">
+            
+            <div class="highlight-box">
+                <div class="highlight-title">📊 Estimativa de Gordura Corporal</div>
+                <div class="highlight-value">28-32% +/- 32%</div>
+            </div>
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">💪</span>
+                    <h2 class="section-title">Composição Corporal Calculada</h2>
+                </div>
+                <div class="composition-grid">
+                    
+                    <div class="comp-item">
+                        <div class="comp-label">Massa Magra</div>
+                        <div class="comp-value">55.7kg</div>
+                    </div>
+                    
+                    
+                    <div class="comp-item">
+                        <div class="comp-label">Massa Gorda</div>
+                        <div class="comp-value">25.1kg</div>
+                    </div>
+                    
+                    
+                    <div class="comp-item">
+                        <div class="comp-label">Massa Óssea</div>
+                        <div class="comp-value">3.3kg</div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🔍</span>
+                    <h2 class="section-title">Observações Físicas Detalhadas</h2>
+                </div>
+                <ul class="tech-list">
+                    <li>(DETALHADAS):</li><li>Vestuário: Top preto sem mangas com duas alças em cada ombro, short preto justo acima do joelho e chinelos rosa claro.</li><li>Acessórios: Colar fino dourado visível no pescoço, tatuagem discreta no braço esquerdo (face interna do antebraço), sem outros acessórios aparentes.</li><li>Ambiente: Sala com cortinas cor de rosa ao fundo, sofá preto com manta rosa clara ao lado esquerdo, estante de madeira com objetos e livros à direita, piso de madeira claro.</li><li>Postura: Corpo em posição frontal, ereto, braços relaxados ao lado do corpo, inclinação quase nula, expressão facial neutra.</li><li>Iluminação: Predominantemente artificial, proveniente do teto, sem sombras fortes ou contraluz, iluminação uniforme na área da imagem.</li><li>Outros detalhes únicos: Marcas naturais na pele, tatuagem visível, ambiente doméstico com organização simples e clara.</li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🧠</span>
+                    <h2 class="section-title">Raciocínio Técnico</h2>
+                </div>
+                <p style="font-size: 14px; line-height: 1.8; color: #495057;">(resumo):
+A imagem apresenta iluminação adequada e posicionamento frontal correto, com corpo completamente visível e postura ereta. Marcos anatômicos como contornos do abdômen, coxas e braços mostram leve adiposidade subcutânea, especialmente na região abdominal e membros inferiores. A definição muscular aparente é moderada, com ausência de vascularização evidente, o que corrobora para uma estimativa de gordura corporal na faixa média-alta para mulheres adultas.</p>
+            </div>
+            
+            
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">🧭</span>
+                    <h2 class="section-title">Sugestões Educativas</h2>
+                </div>
+                <ul class="tech-list">
+                    <li>Consultar profissional de saúde para avaliação detalhada da composição corporal.</li><li>Nutricionista e educador físico são indicados para acompanhamento e orientação personalizada aos objetivos.</li><li>Manter rotina equilibrada de alimentação e atividade física adaptada às condições pessoais.</li><li>Considerar avaliação periódica para monitoramento da composição corporal e ajustes no plano de saúde e exercício.</li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="section">
+                <div class="section-header">
+                    <span class="section-icon">💡</span>
+                    <h2 class="section-title">Considerações Técnicas</h2>
+                </div>
+                <ul class="tech-list">
+                    <li>Base para análise são estudos multi</li><li>referenciais visuais validados.</li><li>Fatores como hidratação, postura e qualidade da luz influenciam a precisão.</li><li>Esta análise é estimativa e referencial, não substitui exame clínico ou densitometria.</li>
+                </ul>
+            </div>
+            
+            
+            <div class="disclaimer">
+                <div class="disclaimer-title">⚠️ Protocolo de Segurança</div>
+                <div class="disclaimer-text">
+                    🛡️ Esta análise é apenas referencial e não deve ser usada para decisões clínicas. Para orientações personalizadas, consulte um profissional de saúde.
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <strong>Sistema de Análise Corporal V5.0</strong><br>
+            7 de novembro de 2025 às 07:23 (Horário de Brasília) • Selma Amparo Ortolá Simó 
+        </div>
+    </div>
+</body>
+</html>
